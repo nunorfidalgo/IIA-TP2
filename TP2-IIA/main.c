@@ -8,27 +8,31 @@
 
 int main(int argc, char *argv[])
 {
-	char filename[30];
-	int runs, num_coins; // k, custo = 0, best_custo = 0;
-	//int *sol, *best;
-	float value;
-	float *filedata;
-	//int *cashregister;
-	float mbf = 0.0;
+	while(1){
+		char filename[30];
+		int runs, num_coins; // k, custo = 0, best_custo = 0;
+		//int *sol, *best;
+		float value;
+		float *filedata;
+		int *cashregister;
+		float mbf = 0.0;
 
-	runs = DEFAULT_RUNS;
-	menu(filename);
+		runs = DEFAULT_RUNS;
+		menu(filename);
 
-	if(runs <= 0)
-		return 0;
-	
-	init_rand();
+		if (runs <= 0)
+			return 0;
 
-    // Preenche vector de moedas
-	filedata = read_file(filename, &num_coins, &value);
+		init_rand();
 
-    mostra_grafo(filedata, &num_coins, &value);
-    exit(1);
+		// Preenche vector de moedas
+		filedata = read_file(filename, &num_coins, &value);
+		show_file(filedata, &num_coins, &value);
+
+		cashregister = count_coins(filedata, &num_coins);
+		show_coins(cashregister, ALL_COINS);
+
+	}
 /*
 	sol = malloc(sizeof(int)*vert);
 	best = malloc(sizeof(int)*vert);

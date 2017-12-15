@@ -36,7 +36,7 @@ float* read_file(char *filename, int *num_coins, float *coin_value)
 }
 
 // Imprime a matrix lida do ficheiro.
-void mostra_grafo(float *filedata, int *num_coins, float *coin_value)
+void show_file(float *filedata, int *num_coins, float *coin_value)
 {
 	int i;
 
@@ -47,31 +47,77 @@ void mostra_grafo(float *filedata, int *num_coins, float *coin_value)
 
 	// mostra moedas
 	for(i=0; i<*num_coins; i++){
-		printf("%.2f ", *filedata++);
+		printf("%.3f ", *filedata++);
     }
     printf("\n");
+}
+
+int* count_coins(float *data, int *num_coins) {
+	int i, j;
+	int *count_coins;
+	count_coins = malloc(sizeof(float) * ALL_COINS); // (*num_coins));
+	if (!count_coins)
+	{
+		printf("Erro na alocacao de memoria\n");
+		exit(1);
+	}
+
+	for (i = 0; i < ALL_COINS; i++)
+		count_coins[i] = 0;
+
+	// conta moedas
+	for (i = 0; i < *num_coins; i++) {
+		if (data[i] == 0.01f) count_coins[0]++;
+		if (data[i] == 0.02f) count_coins[1]++;
+		if (data[i] == 0.05f) count_coins[2]++;
+		if (data[i] == 0.1f) count_coins[3]++;
+		if (data[i] == 0.2f) count_coins[4]++;
+		if (data[i] == 0.5f) count_coins[5]++;
+		if (data[i] == 1.0f) count_coins[6]++;
+		if (data[i] == 2.0f) count_coins[7]++;
+	}
+	
+	//show_coins(count_coins, ALL_COINS);
+	return count_coins; // count_coins;
+}
+
+void show_coins(int *cash, int num_coins)
+{
+	int i;
+	// mostra moedas
+	for (i = 0; i<num_coins; i++) {
+		printf("%d ", cash[i]);
+	}
+	printf("\n");
 }
 
 void menu(char* filename){
 	int op;
 	do {
 		printf("Escolha o grafo: ");
-		printf("\n1 - grafo_teste.txt");
+		printf("\n1 - grafo1.txt");
 		printf("\n2 - grafo2.txt");
-		//printf("\n3 - grafo?.txt");
+		printf("\n3 - grafo3.txt");
+		printf("\n9 - grafo_teste.txt");
 		printf("\n0 - sair");
 		printf("\nop: ");
 		scanf("%d", &op);
-	} while (op <= 0 || op >= 2);
+	} while (op < 0 || op > 9);
 	switch (op) {
-	case 0:
-		exit(1);
-		break;
 	case 1:
-		strcpy(filename, "grafo_teste.txt");
+		strcpy(filename, "grafo1.txt");
 		break;
 	case 2:
 		strcpy(filename, "grafo2.txt");
+		break;
+	case 3:
+		strcpy(filename, "grafo3.txt");
+		break;
+	case 9:
+		strcpy(filename, "grafo_teste.txt");
+		break;
+	case 0:
+		exit(1);
 		break;
 	}
 }
