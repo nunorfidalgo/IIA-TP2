@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="algoritmo.h" />
+    <ClInclude Include="algoritmos.h" />
     <ClInclude Include="funcoes.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="algoritmo.c" />
+    <ClCompile Include="algoritmos.c" />
     <ClCompile Include="funcoes.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="utils.c" />

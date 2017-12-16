@@ -4,7 +4,7 @@
 * Desenvolvido em Visual Studio 2017;
 * Código em PT-PT (na maioria)
 
-## TASKS
+## Tarefas
 - [x] Criação inicial do projecto usando o GitHub
 - [x] Criação inicial do projecto em Visual Studio
 - [x] Ler ficheiro
@@ -15,3 +15,4 @@
 - [ ] Mudar e testar o algoritmo trepa colipas com probabilidades versão 2
 - [ ] Mudar e testar o algoritmo recristalizacao simualada
 - [ ] faltam outros algoritmos, verificar
+- [ ] comentar codigo

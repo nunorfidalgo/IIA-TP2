@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "algoritmo.h"
+#include "algoritmos.h"
 #include "funcoes.h"
 #include "utils.h"
 

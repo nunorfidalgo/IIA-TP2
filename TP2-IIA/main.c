@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "algoritmo.h"
+#include "algoritmos.h"
 #include "funcoes.h"
 #include "utils.h"
 
