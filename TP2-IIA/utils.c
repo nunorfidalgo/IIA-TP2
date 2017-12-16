@@ -1,182 +1,121 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+#include "funcoes.h"
 #include "utils.h"
 
-// Leitura do ficheiro de input
-// Recebe: nome do ficheiro, numero de vertices (ptr), numero de iteracoes (ptr)
-// Devolve a matriz de adjacencias
-float* read_file(char *filename, int *num_coins, float *coin_value)
-{
+// Inicializa o gerador de numeros aleatorios
+void init_rand() {
+	srand((unsigned)time(NULL));
+}
+
+// Devolve valor inteiro aleatorio entre min e max
+int random_l_h(int min, int max) {
+	return min + rand() % (max - min + 1);
+}
+
+// Devolve um valor real aleatorio do intervalo [0, 1]
+float rand_01() {
+	return ((float)rand()) / RAND_MAX;
+}
+
+float* ler_ficheiro(char *nomeficheiro, int *num_moedas, float *valor_moeda){
 	FILE *file;
-	float *data;
+	float *dados;
 	int i;
-	file=fopen(filename, "r");
+	file=fopen(nomeficheiro, "r");
 	if(!file)
 	{
 		printf("Erro no acesso ao ficheiro dos dados\n");
 		exit(1);
 	}
-	// Numero de moedas
-	fscanf(file, " %d", num_coins);
-	// valor a alcançar
-	fscanf(file, " %f", coin_value);
-	// Alocacao dinamica do vector
-	data = malloc(sizeof(float)*(*num_coins));
-	if(!data)
+	fscanf(file, " %d", num_moedas);
+	fscanf(file, " %f", valor_moeda);
+	dados = malloc(sizeof(float)*(*num_moedas));
+	if(!dados)
 	{
 	    printf("Erro na alocacao de memoria\n");
 	    exit(1);
 	}
-	
-	for (i = 0; i < *num_coins; i++)
-		fscanf(file, " %f", &data[i]);
+	for (i = 0; i < *num_moedas; i++)
+		fscanf(file, " %f", &dados[i]);
 	fclose(file);
-	return data;
+	return dados;
 }
 
-// Imprime a matrix lida do ficheiro.
-void show_file(float *filedata, int *num_coins, float *coin_value)
-{
+void mostra_ficheiro(float *dados, int *num_moedas, float *valor_moeda){
 	int i;
-
-	// Numero de moedas
-	printf("\n%d ", *num_coins);
-	// valor a alcançar
-	printf("%.2f\n", *coin_value);
-
-	// mostra moedas
-	for(i=0; i<*num_coins; i++){
-		printf("%.3f ", *filedata++);
+	printf("\nDados ficheiro:");
+	printf("\nNumero de moedas: %d", *num_moedas);
+	printf("\nValor a atingir: %.2f", *valor_moeda);
+	printf("\nMoedas: ");
+	for(i=0; i<*num_moedas; i++){
+		printf("%.2f ", dados[i]);
     }
     printf("\n");
 }
 
-int* count_coins(float *data, int *num_coins) {
-	int i, j;
-	int *count_coins;
-	count_coins = malloc(sizeof(float) * ALL_COINS); // (*num_coins));
-	if (!count_coins)
+int* conta_moedas(float *dados, int *num_moedas){
+int i;
+	int *conta_moedas;
+	conta_moedas = malloc(sizeof(float) * TOTAL_MOEDAS);
+	if (!conta_moedas)
 	{
 		printf("Erro na alocacao de memoria\n");
 		exit(1);
 	}
-
-	for (i = 0; i < ALL_COINS; i++)
-		count_coins[i] = 0;
-
-	// conta moedas
-	for (i = 0; i < *num_coins; i++) {
-		if (data[i] == 0.01f) count_coins[0]++;
-		if (data[i] == 0.02f) count_coins[1]++;
-		if (data[i] == 0.05f) count_coins[2]++;
-		if (data[i] == 0.1f) count_coins[3]++;
-		if (data[i] == 0.2f) count_coins[4]++;
-		if (data[i] == 0.5f) count_coins[5]++;
-		if (data[i] == 1.0f) count_coins[6]++;
-		if (data[i] == 2.0f) count_coins[7]++;
+	for (i = 0; i < TOTAL_MOEDAS; i++)
+		conta_moedas[i] = 0;
+	for (i = 0; i < *num_moedas; i++) {
+		if (dados[i] == 0.01f) conta_moedas[0]++;
+		if (dados[i] == 0.02f) conta_moedas[1]++;
+		if (dados[i] == 0.05f) conta_moedas[2]++;
+		if (dados[i] == 0.1f) conta_moedas[3]++;
+		if (dados[i] == 0.2f) conta_moedas[4]++;
+		if (dados[i] == 0.5f) conta_moedas[5]++;
+		if (dados[i] == 1.0f) conta_moedas[6]++;
+		if (dados[i] == 2.0f) conta_moedas[7]++;
 	}
-	
-	//show_coins(count_coins, ALL_COINS);
-	return count_coins; // count_coins;
+	return conta_moedas;
 }
 
-void show_coins(int *cash, int num_coins)
-{
+void mostra_moedas(int *dinheiro, int num_moedas){
 	int i;
-	// mostra moedas
-	for (i = 0; i<num_coins; i++) {
-		printf("%d ", cash[i]);
+	printf("\nMoedas contadas: ");
+	for (i = 0; i<num_moedas; i++) {
+		printf("%d ", dinheiro[i]);
 	}
 	printf("\n");
 }
 
-void menu(char* filename){
+void menu(char* nomeficheiro){
 	int op;
-	do {
-		printf("Escolha o grafo: ");
-		printf("\n1 - grafo1.txt");
-		printf("\n2 - grafo2.txt");
-		printf("\n3 - grafo3.txt");
-		printf("\n9 - grafo_teste.txt");
+	do{
+		printf("Menu:\nEscolha o conjunto de moedas para testar: ");
+		printf("\n1 - moedas1.txt");
+		printf("\n2 - moedas2.txt");
+		printf("\n3 - moedas3.txt");
+		printf("\n9 - moedas_teste.txt");
 		printf("\n0 - sair");
 		printf("\nop: ");
 		scanf("%d", &op);
-	} while (op < 0 || op > 9);
-	switch (op) {
+	}while (op < 0 || op > 9);
+	switch (op){
 	case 1:
-		strcpy(filename, "grafo1.txt");
+		strcpy(nomeficheiro, "moedas1.txt");
 		break;
 	case 2:
-		strcpy(filename, "grafo2.txt");
+		strcpy(nomeficheiro, "moedas2.txt");
 		break;
 	case 3:
-		strcpy(filename, "grafo3.txt");
+		strcpy(nomeficheiro, "moedas3.txt");
 		break;
 	case 9:
-		strcpy(filename, "grafo_teste.txt");
+		strcpy(nomeficheiro, "moedas_teste.txt");
 		break;
 	case 0:
 		exit(1);
 		break;
 	}
-}
-// Gera a solucao inicial
-// Parametros: solucao, numero de vertices
-void gera_sol_inicial(int *sol, int v)
-{
-	int i, x;
-
-	for(i=0; i<v; i++)
-        sol[i]=0;
-	for(i=0; i<v/2; i++)
-    {
-        do
-			x = random_l_h(0, v-1);
-        while(sol[x] != 0);
-        sol[x]=1;
-    }
-}
-
-// Escreve solucao
-// Parametros: solucao e numero de vertices
-void escreve_sol(int *sol, int vert)
-{
-	int i;
-
-	printf("\nConjunto A: ");
-	for(i=0; i<vert; i++)
-		if(sol[i]==0)
-			printf("%d  ", i);
-	printf("\nConjunto B: ");
-	for(i=0; i<vert; i++)
-		if(sol[i]==1)
-			printf("%d  ", i);
-	printf("\n");
-}
-
-// copia vector b para a (tamanho n)
-void substitui(int a[], int b[], int n)
-{
-    int i;
-    for(i=0; i<n; i++)
-        a[i]=b[i];
-}
-
-// Inicializa o gerador de numeros aleatorios
-void init_rand()
-{
-	srand((unsigned)time(NULL));
-}
-
-// Devolve valor inteiro aleatorio entre min e max
-int random_l_h(int min, int max)
-{
-	return min + rand() % (max-min+1);
-}
-
-// Devolve um valor real aleatorio do intervalo [0, 1]
-float rand_01()
-{
-	return ((float)rand())/RAND_MAX;
 }

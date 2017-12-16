@@ -18,18 +18,15 @@
     <ClInclude Include="algoritmo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="funcao.h">
+    <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
+    <ClInclude Include="funcoes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="algoritmo.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="funcao.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.c">
@@ -38,12 +35,21 @@
     <ClCompile Include="utils.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="funcoes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="grafo_teste.txt">
+    <Text Include="moedas_teste.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="grafo1.txt">
+    <Text Include="moedas1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="moedas2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="moedas3.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

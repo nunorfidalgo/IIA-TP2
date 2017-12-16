@@ -1,24 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "algoritmo.h"
+#include "funcoes.h"
 #include "utils.h"
 
-#define DEFAULT_RUNS 10
+#define DEFAULT_RUNS 5
 
-int main(int argc, char *argv[])
-{
-	while(1){
-		char filename[30];
-		int runs, num_coins; // k, custo = 0, best_custo = 0;
-		//int *sol, *best;
-		float value;
-		float *filedata;
-		int *cashregister;
-		float mbf = 0.0;
+int main(int argc, char *argv[]){
+	char nomeficheiro[30];
+	int runs, num_moedas, k, custo = 0, best_custo = 0; // vert = TOTAL_MOEDAS;
+	int *sol, *best;
+	float valor;
+	float *dadosficheiro;
+	int *caixa;
+	float mbf = 0.0;
 
+	while (1) {
 		runs = DEFAULT_RUNS;
-		menu(filename);
+		menu(nomeficheiro);
 
 		if (runs <= 0)
 			return 0;
@@ -26,51 +25,51 @@ int main(int argc, char *argv[])
 		init_rand();
 
 		// Preenche vector de moedas
-		filedata = read_file(filename, &num_coins, &value);
-		show_file(filedata, &num_coins, &value);
+		dadosficheiro = ler_ficheiro(nomeficheiro, &num_moedas, &valor);
+		mostra_ficheiro(dadosficheiro, &num_moedas, &valor);
 
-		cashregister = count_coins(filedata, &num_coins);
-		show_coins(cashregister, ALL_COINS);
+		caixa = conta_moedas(dadosficheiro, &num_moedas);
+		mostra_moedas(caixa, TOTAL_MOEDAS);
 
-	}
-/*
-	sol = malloc(sizeof(int)*vert);
-	best = malloc(sizeof(int)*vert);
-	if(sol == NULL || best == NULL)
-	{
-		printf("Erro na alocacao de memoria");
-		exit(1);
-	}
-	for(k=0; k<runs; k++)
-	{
-		// Gerar solucao inicial
-		gera_sol_inicial(sol, vert);
-		escreve_sol(sol, vert);
-		// Trepa colinas
-		// custo = trepa_colinas(sol, grafo, vert, num_iter);
-		// Aula 8
-		//custo = trepa_colinas_prob(sol, grafo, vert, num_iter);
-		// custo = trepa_colinas_prob_v2(sol, grafo, vert, num_iter);
-		custo = recristalizacao_simualada(sol, grafo, vert, num_iter);
-		// Escreve resultados da repeticao k
-		printf("\nRepeticao %d:", k);
-		escreve_sol(sol, vert);
-		printf("Custo final: %2d\n", custo);
-		mbf += custo;
-		if(k==0 || best_custo > custo)
+		sol = malloc(sizeof(int)*TOTAL_MOEDAS);
+		best = malloc(sizeof(int)*TOTAL_MOEDAS);
+		if (sol == NULL || best == NULL)
 		{
-			best_custo = custo;
-			substitui(best, sol, vert);
+			printf("Erro na alocacao de memoria");
+			exit(1);
 		}
-    }
-	// Escreve eresultados globais
-	printf("\n\nMBF: %f\n", mbf/k);
-	printf("\nMelhor solucao encontrada");
-	escreve_sol(best, vert);
-	printf("Custo final: %2d\n", best_custo);
-	free(grafo);
-    free(sol);
-	free(best);
-*/
-    return 0;
+		for (k = 0; k < runs; k++)
+		{
+			// Gerar solucao inicial
+			gera_sol_inicial(sol, TOTAL_MOEDAS);
+			mostra_sol_inicial(sol, TOTAL_MOEDAS);
+			escreve_sol(sol, TOTAL_MOEDAS);
+			// Trepa colinas
+			custo = trepa_colinas(sol, caixa, TOTAL_MOEDAS, runs);
+			// Aula 8
+			//custo = trepa_colinas_prob(sol, grafo, vert, num_iter);
+			// custo = trepa_colinas_prob_v2(sol, grafo, vert, num_iter);
+			//custo = recristalizacao_simualada(sol, grafo, vert, num_iter);
+			// Escreve resultados da repeticao k
+			printf("\nRepeticao %d:", k);
+			escreve_sol(sol, TOTAL_MOEDAS);
+			printf("Custo final: %2d\n", custo);
+			mbf += custo;
+			if (k == 0 || best_custo > custo)
+			{
+				best_custo = custo;
+				substitui(best, sol, TOTAL_MOEDAS);
+			}
+		}
+		// Escreve eresultados globais
+		printf("\nMBF: %0.3f\n", mbf / k);
+		printf("\nMelhor solucao encontrada");
+		escreve_sol(best, TOTAL_MOEDAS);
+		printf("Custo final: %2d\n", best_custo);
+		free(caixa);
+		free(sol);
+		free(best);
+		printf("\n");
+	}
+	return 0;
 }
