@@ -4,11 +4,11 @@
 #include "funcoes.h"
 #include "utils.h"
 
-#define DEFAULT_RUNS 5
+#define DEFAULT_RUNS 5 // mudar para 30
 
 int main(int argc, char *argv[]){
 	char nomeficheiro[30];
-	int runs, num_moedas, k, custo = 0, best_custo = 0; // vert = TOTAL_MOEDAS;
+	int runs, num_moedas, k, best_ite, custo = 0, best_custo = 0;
 	int *sol, *best;
 	float valor;
 	float *dadosficheiro;
@@ -53,19 +53,21 @@ int main(int argc, char *argv[]){
 			// Escreve resultados da repeticao k
 			printf("\nRepeticao %d:", k);
 			escreve_sol(sol, TOTAL_MOEDAS);
-			printf("Custo final: %2d\n", custo);
+			printf("\tCusto final: %d", custo);
 			mbf += custo;
-			if (k == 0 || best_custo > custo)
+			if (k == 0 || best_custo > custo) // perguntar ao prof se aqui também tem que se > e ou >=???????????????????????
 			{
+				best_ite = k;
 				best_custo = custo;
 				substitui(best, sol, TOTAL_MOEDAS);
 			}
 		}
 		// Escreve eresultados globais
+		printf("\n");
 		printf("\nMBF: %0.3f\n", mbf / k);
-		printf("\nMelhor solucao encontrada");
+		printf("\nMelhor solucao encontrada foi na repeticao %d com os valores:", best_ite);
 		escreve_sol(best, TOTAL_MOEDAS);
-		printf("Custo final: %2d\n", best_custo);
+		printf("\tCusto final: %d\n", best_custo);
 		free(caixa);
 		free(sol);
 		free(best);

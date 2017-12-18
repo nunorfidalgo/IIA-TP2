@@ -2,7 +2,8 @@
 ## Trabalho Prático #2 de Introdução a Inteligência Artifical - ISEC
 
 * Desenvolvido em Visual Studio 2017;
-* Código em PT-PT (na maioria)
+* Código em PT-PT (na maioria);
+* Os algoritmos foram facultados nas aulas e são adaptados ao ao trabalho;
 
 ## Tarefas
 - [x] Criação inicial do projecto usando o GitHub

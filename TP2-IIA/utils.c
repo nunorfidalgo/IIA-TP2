@@ -47,9 +47,9 @@ float* ler_ficheiro(char *nomeficheiro, int *num_moedas, float *valor_moeda){
 void mostra_ficheiro(float *dados, int *num_moedas, float *valor_moeda){
 	int i;
 	printf("\nDados ficheiro:");
-	printf("\nNumero de moedas: %d", *num_moedas);
-	printf("\nValor a atingir: %.2f", *valor_moeda);
-	printf("\nMoedas: ");
+	printf("\n\tNumero de moedas: %d", *num_moedas);
+	printf("\n\tValor a atingir: %.2f", *valor_moeda);
+	printf("\n\tMoedas: ");
 	for(i=0; i<*num_moedas; i++){
 		printf("%.2f ", dados[i]);
     }

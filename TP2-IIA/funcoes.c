@@ -3,40 +3,40 @@
 #include "utils.h"
 
 // Gera a solucao inicial
-// Parametros: solucao, numero de vertices
-void gera_sol_inicial(int *sol, int v) {
+// Parametros: solucao, numero de moedas
+void gera_sol_inicial(int *sol, int m) {
 	int i, x;
-	for (i = 0; i<v; i++)
+	for (i = 0; i<m; i++)
 		sol[i] = 0;
-	for (i = 0; i<v / 2; i++) {
+	for (i = 0; i<m/2; i++) {
 		do
-			x = random_l_h(0, v - 1);
+			x = random_l_h(0, m - 1);
 		while (sol[x] != 0);
 		//sol[x]=1;
-		sol[x] = random_l_h(1, v - 1);
+		sol[x] = random_l_h(1, m - 1);
 	}
 	printf("\n");
 }
 
-void mostra_sol_inicial(int *sol, int v) {
+void mostra_sol_inicial(int *sol, int m) {
 	int i;
-	printf("Solucao inicial: ");
-	for (i = 0; i<v; i++)
+	printf("\tSolucao inicial: ");
+	for (i = 0; i<m; i++)
 		printf("%d ", sol[i]);
 }
 
 // Escreve solucao
-// Parametros: solucao e numero de vertices
-void escreve_sol(int *sol, int vert) {
+// Parametros: solucao e numero de moedas
+void escreve_sol(int *sol, int m) {
 	int i;
-	printf("\nConjunto A: ");
-	for (i = 0; i<vert; i++)
-		if (sol[i] == 0)
-			printf("%d  ", i);
-	printf("\nConjunto B: ");
+	printf("\n\tConjunto Solucao: ");
+	for (i = 0; i<m; i++)
+		if (sol[i] != 0)
+			printf("%d ", i);
+	/*printf("\nConjunto B: ");
 	for (i = 0; i<vert; i++)
 		if (sol[i] == 1)
-			printf("%d  ", i);
+			printf("%d  ", i);*/
 	printf("\n");
 }
 
@@ -104,15 +104,16 @@ void gera_vizinho(int a[], int b[], int n) {
 	for (i = 0; i<n; i++)
 		b[i] = a[i];
 	// Encontra posicao com valor 0
-	do
+	do {
 		p1 = random_l_h(0, n - 1);
-	while (b[p1] != 0);
+		//printf("trap...");
+	} while (b[p1] != 0);
 	// Encontra posicao com valor 0
 	do {
 		p2 = random_l_h(0, n - 1);
 	} while (b[p2] < 1 || b[p2] > 9);
 	// Troca
-	b[p1] = random_l_h(1, n - 1);;
+	b[p1] = random_l_h(0, n - 1);
 	b[p2] = 0;
 }
 

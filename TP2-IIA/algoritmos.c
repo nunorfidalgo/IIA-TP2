@@ -34,7 +34,7 @@ int trepa_colinas(int sol[], int *moedas, int n, int num_iter)
 		custo_viz = calcula_fit(nova_sol, moedas, n);
 		// Aceita vizinho se o custo diminuir (problema de minimizacao)
         //if(custo_viz < custo)
-        if(custo_viz <= custo)
+        if(custo_viz < custo) // mudar em < e <=
         {
 			substitui(sol, nova_sol, n);
 			custo = custo_viz;
