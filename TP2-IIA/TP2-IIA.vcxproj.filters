@@ -52,5 +52,14 @@
     <Text Include="moedas3.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="moedas_defesa.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="moedas4.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="moedas5.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

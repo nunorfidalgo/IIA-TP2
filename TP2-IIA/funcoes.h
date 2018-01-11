@@ -1,11 +1,11 @@
-void gera_sol_inicial(int *sol, int v);
+void gera_sol_inicial(int *sol, float moedas[], int n_moedas, float valor_atingir);
 void mostra_sol_inicial(int *sol, int v);
-void escreve_sol(int *sol, int vert);
-void substitui(int a[], int b[], int n);
 
-int cal_fit(int a[], int *mat, int vert);
-int calcula_fit(int sol[], int *caixa, int n);
+int calcula_fit(int *sol, int n_moedas);
 
-void gera_viz(int a[], int b[], int n);
-void gera_vizinho(int a[], int b[], int n);
-void gera_vizinho2(int a[], int b[], int n);
+void gera_vizinho(int sol[], int nova_sol[], int n_moedas);
+void mostra_vizinho(int *sol, int n_moedas);
+
+void escreve_sol(int *sol, int n_moedas);
+
+void substitui(int best[], int sol[], int n_moedas);

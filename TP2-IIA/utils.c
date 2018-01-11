@@ -20,9 +20,9 @@ float rand_01() {
 	return ((float)rand()) / RAND_MAX;
 }
 
-float* ler_ficheiro(char *nomeficheiro, int *num_moedas, float *valor_moeda){
+float* ler_ficheiro(char *nomeficheiro, int *n_moedas, float *valor_atingir){
 	FILE *file;
-	float *dados;
+	float *moedas;
 	int i;
 	file=fopen(nomeficheiro, "r");
 	if(!file)
@@ -30,63 +30,30 @@ float* ler_ficheiro(char *nomeficheiro, int *num_moedas, float *valor_moeda){
 		printf("Erro no acesso ao ficheiro dos dados\n");
 		exit(1);
 	}
-	fscanf(file, " %d", num_moedas);
-	fscanf(file, " %f", valor_moeda);
-	dados = malloc(sizeof(float)*(*num_moedas));
-	if(!dados)
+	fscanf(file, " %d", n_moedas);
+	fscanf(file, " %f", valor_atingir);
+	moedas = malloc(sizeof(float)*(*n_moedas));
+	if(!moedas)
 	{
 	    printf("Erro na alocacao de memoria\n");
 	    exit(1);
 	}
-	for (i = 0; i < *num_moedas; i++)
-		fscanf(file, " %f", &dados[i]);
+	for (i = 0; i < *n_moedas; i++)
+		fscanf(file, " %f", &moedas[i]);
 	fclose(file);
-	return dados;
+	return moedas;
 }
 
-void mostra_ficheiro(float *dados, int *num_moedas, float *valor_moeda){
+void mostra_ficheiro(float *moedas, int *n_moedas, float *valor_atingir){
 	int i;
 	printf("\nDados ficheiro:");
-	printf("\n\tNumero de moedas: %d", *num_moedas);
-	printf("\n\tValor a atingir: %.2f", *valor_moeda);
-	printf("\n\tMoedas: ");
-	for(i=0; i<*num_moedas; i++){
-		printf("%.2f ", dados[i]);
+	printf("\n - Numero de moedas: %d", *n_moedas);
+	printf("\n - Valor a atingir: %.2f", *valor_atingir);
+	printf("\n - Moedas: ");
+	for(i=0; i<*n_moedas; i++){
+		printf("%.2f ", moedas[i]);
     }
-    printf("\n");
-}
-
-int* conta_moedas(float *dados, int *num_moedas){
-int i;
-	int *conta_moedas;
-	conta_moedas = malloc(sizeof(float) * TOTAL_MOEDAS);
-	if (!conta_moedas)
-	{
-		printf("Erro na alocacao de memoria\n");
-		exit(1);
-	}
-	for (i = 0; i < TOTAL_MOEDAS; i++)
-		conta_moedas[i] = 0;
-	for (i = 0; i < *num_moedas; i++) {
-		if (dados[i] == 0.01f) conta_moedas[0]++;
-		if (dados[i] == 0.02f) conta_moedas[1]++;
-		if (dados[i] == 0.05f) conta_moedas[2]++;
-		if (dados[i] == 0.1f) conta_moedas[3]++;
-		if (dados[i] == 0.2f) conta_moedas[4]++;
-		if (dados[i] == 0.5f) conta_moedas[5]++;
-		if (dados[i] == 1.0f) conta_moedas[6]++;
-		if (dados[i] == 2.0f) conta_moedas[7]++;
-	}
-	return conta_moedas;
-}
-
-void mostra_moedas(int *dinheiro, int num_moedas){
-	int i;
-	printf("\nMoedas contadas: ");
-	for (i = 0; i<num_moedas; i++) {
-		printf("%d ", dinheiro[i]);
-	}
-	printf("\n");
+    //printf("\n");
 }
 
 void menu(char* nomeficheiro){
@@ -96,6 +63,9 @@ void menu(char* nomeficheiro){
 		printf("\n1 - moedas1.txt");
 		printf("\n2 - moedas2.txt");
 		printf("\n3 - moedas3.txt");
+		printf("\n4 - moedas4.txt");
+		printf("\n5 - moedas5.txt");
+		printf("\n6 - moedas_defesa.txt");
 		printf("\n9 - moedas_teste.txt");
 		printf("\n0 - sair");
 		printf("\nop: ");
@@ -110,6 +80,15 @@ void menu(char* nomeficheiro){
 		break;
 	case 3:
 		strcpy(nomeficheiro, "moedas3.txt");
+		break;
+	case 4:
+		strcpy(nomeficheiro, "moedas4.txt");
+		break;
+	case 5:
+		strcpy(nomeficheiro, "moedas5.txt");
+		break;
+	case 6:
+		strcpy(nomeficheiro, "moedas_defesa.txt");
 		break;
 	case 9:
 		strcpy(nomeficheiro, "moedas_teste.txt");

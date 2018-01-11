@@ -33,6 +33,9 @@
     <Text Include="moedas1.txt" />
     <Text Include="moedas2.txt" />
     <Text Include="moedas3.txt" />
+    <Text Include="moedas4.txt" />
+    <Text Include="moedas5.txt" />
+    <Text Include="moedas_defesa.txt" />
     <Text Include="moedas_teste.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
